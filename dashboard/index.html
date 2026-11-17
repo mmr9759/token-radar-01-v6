@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — fitted comps, tested blind</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>Token Launch Radar</h1>
+    <p class="sub">Pre-token protocols ranked by implied value — from a fitted comps curve, tested out of sample.</p>
+  </div>
+  <div class="asof" id="asof"></div>
+</header>
+
+<section id="tests" class="panel">
+  <h2>Does the model work? Tested blind, not asserted</h2>
+  <p class="plain">We fit the model on traded tokens, then test it on tokens it never saw. A flat multiple is the baseline every radar can beat by accident — the curve has to beat it blind.</p>
+  <div id="testgrid" class="testgrid"></div>
+  <p class="plain small" id="testnote"></p>
+</section>
+
+<section class="panel">
+  <h2>The board <span id="count"></span></h2>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search name or slug…" aria-label="Search">
+    <select id="fcat" aria-label="Category"><option value="">All categories</option></select>
+    <select id="fready" aria-label="Readiness">
+      <option value="">Any readiness</option>
+      <option>Hot</option><option>Warming</option><option>Early</option>
+    </select>
+    <select id="fverdict" aria-label="Farm verdict">
+      <option value="">Any farm verdict</option>
+      <option>FARM</option><option>THIN</option><option>SKIP</option>
+    </select>
+    <button id="sortBtn" type="button">Sort: implied ↓</button>
+  </div>
+  <div class="tablewrap">
+    <table id="board">
+      <thead><tr>
+        <th data-k="rank">Rank</th><th data-k="name">Protocol</th><th data-k="category">Category</th>
+        <th data-k="tvl_usd">TVL</th><th data-k="implied_value_usd">Implied value</th>
+        <th data-k="readiness">Readiness</th><th data-k="rank_hi">Rank range</th><th data-k="farm_verdict">Farm</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="plain small">Rank range is the 10th–90th percentile of the row's rank across 200 bootstrap refits of the comps — the board's uncertainty, not a false precision. Click a row for its derivation and costed farm plan.</p>
+</section>
+
+<section id="detail" class="panel hidden">
+  <h2 id="dname"></h2>
+  <div id="dbody"></div>
+</section>
+
+<section class="panel">
+  <h2>Already trading — kept apart</h2>
+  <p class="plain">These 24 protocols already have a token, so they are not launch candidates. They are the comparables the curve is fitted on, shown here so the reader can check the model against real market caps.</p>
+  <div class="tablewrap">
+    <table id="live">
+      <thead><tr><th>Protocol</th><th>Category</th><th>TVL</th><th>Market cap</th><th>Multiple</th></tr></thead>
+      <tbody id="liverows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>How the value is built</h2>
+  <p class="plain" id="method"></p>
+</section>
+
+<footer><p class="plain small">Snapshot 2026-11-14 from DefiLlama. Implied values are this radar's own claim, never make.fun's. A protocol that records no token may still have one its record does not carry.</p></footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
